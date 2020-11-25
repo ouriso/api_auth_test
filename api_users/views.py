@@ -14,6 +14,10 @@ User = get_user_model()
 
 
 class LoginToken(ObtainAuthToken):
+    """
+    update last_login User's field during TokenAuthentication
+    """
+
     def post(self, request, *args, **kwargs):
         result = super().post(request, *args, **kwargs)
         token = Token.objects.get(key=result.data['token'])
@@ -22,6 +26,12 @@ class LoginToken(ObtainAuthToken):
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    """
+    Standart ModelMixin classes from 'rest_framework' overriden by
+    'drf_rw_serializers'. Method get_serializer() has been split into
+    get_write_serializer() and get_read_serializer()
+    """
+
     queryset = User.objects.all()
     read_serializer_class = ReadOnlyUserSerializer
     write_serializer_class = WriteOnlyUserSerializer

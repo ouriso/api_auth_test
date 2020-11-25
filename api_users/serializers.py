@@ -20,3 +20,6 @@ class WriteOnlyUserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'first_name', 'last_name',
                   'password', 'is_active')
+        extra_kwargs = {
+            'is_active': {'required': True}
+        }
